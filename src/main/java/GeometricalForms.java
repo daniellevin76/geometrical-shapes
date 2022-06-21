@@ -80,17 +80,22 @@ public class GeometricalForms {
 
     private String determineThreeDShape(List<Point> points) {
 
-
         returnDistinctValues(points);
 
        // System.out.println("distinct values " + returnDistinctValues(points));
         List<List<Point>> pointsInPlane = sortSamePlane(points);
 
-        String baseShape = determineRectangleShape(pointsInPlane.get(0));
 
-        if(!baseShape.equals("Rectangle")) {
 
-            return "3D Shape";
+        if(pointsInPlane.size()==4) {
+
+            String  baseShape = determineRectangleShape(pointsInPlane.get(0));
+
+            if(!baseShape.equals("Quadrilateral")){
+                return "3D Shape";
+            }
+
+
         }
         return "Pyramid";
     }
@@ -100,56 +105,63 @@ public class GeometricalForms {
     private List<List<Point>> sortSamePlane(List<Point> points) {
 
         List<List<Point>> filteredPointsList = new ArrayList<>();
-
-        List<Point> filteredPoints = new ArrayList<>();
+        
 
         List<List<Double>> distinctValues = returnDistinctValues(points);
 
 
-        List<List<Double>> twoDistinctValue = distinctValues.stream().filter(
+        List<List<Double>> twoDistinctValues = distinctValues.stream().filter(
                 value -> value.size() == 2
         ).collect(Collectors.toList());
 
-        System.out.println("twoDistinctValue " + twoDistinctValue.get(0).size());
-        System.out.println("distinctValue " + distinctValues);
-        System.out.println("distinctValue " + distinctValues.size());
+
+       // System.out.println("distinctValue " + distinctValues);
+
+      //  System.out.println("two distinct values " + twoDistinctValues.get(0).size());
+
+     //   System.out.println("twoDistinctValues " + twoDistinctValues.get(0));
 
 
-        for(int j = 1; j < 2; j++){
+
+
+        for(int j = 0; j < 2; j++){
             int finalJ = j;
-            for(int i = 0; i < distinctValues.size(); i++){
+            System.out.println("finalJ " + finalJ);
+            for(int i = 0; i < 3; i++){
 
+                List<Point> filteredPoints;
                 if(i == 0){
 
-
                     filteredPoints = points.stream().
-                            filter(point -> point.getX().equals(twoDistinctValue.get(0).get(finalJ)))
+                            filter(point -> point.getX().equals(twoDistinctValues.get(0).get(finalJ)))
                                     .collect(Collectors.toList());
+                    points.stream().forEach(System.out::println);
 
                 }else  if(i == 1){
 
+                    filteredPoints = points.stream().
+                            filter(point -> point.getY().equals(twoDistinctValues.get(0).get(finalJ)))
+                            .collect(Collectors.toList());
+                   // points.stream().forEach(System.out::println);
+
+                }else {
+
                      filteredPoints = points.stream().
-                            filter(point -> point.getY().equals(twoDistinctValue.get(0).get(finalJ)))
+                            filter(point -> point.getZ().equals(twoDistinctValues.get(0).get(finalJ)))
                             .collect(Collectors.toList());
 
-                }else  if(i == 2) {
-
-                     filteredPoints = points.stream().
-                            filter(point -> point.getZ().equals(twoDistinctValue.get(0).get(finalJ)))
-                            .collect(Collectors.toList());
-
+                    filteredPoints.stream().forEach(System.out::println);
+                    System.out.println(twoDistinctValues.get(0).get(finalJ));
                 }
+                filteredPointsList.add(filteredPoints);
             }
 
 
-            filteredPointsList.add(filteredPoints);
-
-            filteredPointsList.stream().forEach(System.out::println);
 
         }
 
-
-
+        System.out.println("filtered points list");
+     //   filteredPointsList.stream().forEach(System.out::println);
 
 /*
         System.out.println(filteredPoints.size());

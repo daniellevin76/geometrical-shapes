@@ -172,5 +172,24 @@ public class GeometricalFormsTest {
         assertEquals("Pyramid", geometricalForms.determineShape(points));
     }
 
+    @Test
+    void should_return3D_when_EightRandomPointsAreGiven(){
+
+        //For simplicity the points are assumed to given in such an order that
+        // no two consecutive points will connect diagonally
+        Point p1 = new Point(0.0,0.0,0.0);
+        Point p2 = new Point(1.0,1.0,0.0);
+        Point p3 = new Point(3.0,1.0,0.0);
+        Point p4 = new Point(2.0,0.0,0.0);
+        Point p5 = new Point(2.0,4.0,5.0);
+        Point p6 = new Point(1.0,1.0,0.0);
+        Point p7 = new Point(3.0,1.0,0.0);
+        Point p8 = new Point(2.0,0.0,0.0);
+
+        List<Point> points = List.of(p1, p2, p3, p4, p5, p6, p7, p8);
+
+        assertEquals("Pyramid", geometricalForms.determineShape(points));
+    }
+
 }
 
